@@ -49,15 +49,15 @@ public:
 
 /************************************************************************/
 
-    QPainterPath shape() const;
+    QPainterPath shape() const override;
 
-    QRectF boundingRect() const;
+    QRectF boundingRect() const override;
 
     void paint(
             QPainter* _painter
         ,   const QStyleOptionGraphicsItem*
         ,   QWidget*
-    );
+    ) override;
 
 /************************************************************************/
 
