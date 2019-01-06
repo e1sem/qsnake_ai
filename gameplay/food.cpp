@@ -18,7 +18,10 @@ Food::Food( Snake* _snake )
         m_position.setX( generator.bounded( 16 ) + 1 );
         m_position.setY( generator.bounded( 16 ) + 1 );
 
-    } while( _snake->hasCoords( m_position ) );
+    } while(
+                _snake->bodyHasCoords( m_position )
+            ||  _snake->getHeadPosition() == m_position
+    );
 
     initPen();
     initBrush();

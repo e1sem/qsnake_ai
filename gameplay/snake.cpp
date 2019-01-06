@@ -104,10 +104,10 @@ Snake::move_straight() noexcept
 /************************************************************************/
 
 bool
-Snake::hasCoords( QPoint _coords ) const
+Snake::bodyHasCoords( QPoint _coords ) const
 {
 	return std::find(
-			m_snakeCoords.cbegin()
+            ++m_snakeCoords.cbegin()
 		,	m_snakeCoords.cend()
 		,	_coords
 	)

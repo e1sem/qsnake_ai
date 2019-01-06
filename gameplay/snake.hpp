@@ -41,7 +41,7 @@ public:
 
 /************************************************************************/
 
-    bool hasCoords( QPoint _coords ) const;
+    bool bodyHasCoords( QPoint _coords ) const;
 
     QPoint getHeadPosition() const;
 
