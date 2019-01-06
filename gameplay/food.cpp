@@ -4,20 +4,19 @@
 #include <QPen>
 #include <QBrush>
 
-#include <utility>
-#include <random>
+#include <QDateTime>
+#include <QRandomGenerator>
 
 /************************************************************************/
 
 Food::Food( Snake* _snake )
 {
-    std::uniform_int_distribution< int > distr( 1, 16 );
-    std::random_device device;
-    std::default_random_engine generator( device() );
+    QRandomGenerator generator;
+    generator.seed( QDateTime::currentMSecsSinceEpoch() );
 
 	do {
-        m_position.setX( distr( generator ) );
-        m_position.setY( distr( generator ) );
+        m_position.setX( generator.bounded( 16 ) + 1 );
+        m_position.setY( generator.bounded( 16 ) + 1 );
 
     } while( _snake->hasCoords( m_position ) );
 
