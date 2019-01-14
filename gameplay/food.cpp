@@ -4,32 +4,18 @@
 #include <QPen>
 #include <QBrush>
 
-#include <QDateTime>
-#include <QRandomGenerator>
-
 /************************************************************************/
 
-Food::Food( Snake* _snake )
+Food::Food( QPoint position )
+    : m_position{ position }
 {
-    QRandomGenerator generator;
-    generator.seed( QDateTime::currentMSecsSinceEpoch() );
-
-	do {
-        m_position.setX( generator.bounded( 16 ) + 1 );
-        m_position.setY( generator.bounded( 16 ) + 1 );
-
-    } while(
-                _snake->bodyHasCoords( m_position )
-            ||  _snake->getHeadPosition() == m_position
-    );
-
     initPen();
     initBrush();
 
-    setRect( 0, 0, 25, 25 );
+    setRect( 0, 0, 18, 18 );
     setPos(
-            m_position.x() * 25
-        ,   m_position.y() * 25
+            m_position.x() * 18
+        ,   m_position.y() * 18
     );
 }
 

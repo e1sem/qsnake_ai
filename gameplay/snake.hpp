@@ -9,16 +9,6 @@
 
 /************************************************************************/
 
-enum Direction
-{
-		up
-	,	down
-	,	left
-	,	right
-};
-
-/************************************************************************/
-
 class Snake
     : public QGraphicsItem
 {
@@ -37,7 +27,9 @@ public:
 
     void move_right() noexcept;
 
-    void move_straight() noexcept;
+    void move_up() noexcept;
+
+    void move_down() noexcept;
 
 /************************************************************************/
 
@@ -66,8 +58,6 @@ private:
 /************************************************************************/
 
     std::deque< QPoint > m_snakeCoords;
-
-	Direction m_currentDirection;
 
 /************************************************************************/
 

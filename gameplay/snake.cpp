@@ -8,11 +8,9 @@
 
 Snake::Snake()
 {
-    m_snakeCoords.push_back( QPoint( 9, 8 ) );
-    m_snakeCoords.push_back( QPoint( 9, 9 ) );
-    m_snakeCoords.push_back( QPoint( 9, 10 ) );
-
-	m_currentDirection = up;
+    m_snakeCoords.push_back( QPoint( 12, 11 ) );
+    m_snakeCoords.push_back( QPoint( 12, 12 ) );
+    m_snakeCoords.push_back( QPoint( 12, 13 ) );
 }
 
 /************************************************************************/
@@ -20,29 +18,11 @@ Snake::Snake()
 void
 Snake::move_left() noexcept
 {
-	auto lp = m_snakeCoords.front();
+    auto newHead = m_snakeCoords.front();
 
-	switch( m_currentDirection )
-	{
-		case up:
-            lp.rx()--;
-			m_currentDirection = left;
-			break;
-		case down:
-            lp.rx()++;
-			m_currentDirection = right;
-			break;
-		case left:
-            lp.ry()++;
-			m_currentDirection = down;
-			break;
-		case right:
-            lp.ry()--;
-			m_currentDirection = up;
-			break;
-	}
+    newHead.rx()--;
 
-	m_snakeCoords.push_front( lp );
+    m_snakeCoords.push_front( newHead );
 }
 
 /************************************************************************/
@@ -50,56 +30,37 @@ Snake::move_left() noexcept
 void
 Snake::move_right() noexcept
 {
-	auto lp = m_snakeCoords.front();
+    auto newHead = m_snakeCoords.front();
 
-	switch( m_currentDirection )
-	{
-		case up:
-            lp.rx()++;
-			m_currentDirection = right;
-			break;
-		case down:
-            lp.rx()--;
-			m_currentDirection = left;
-			break;
-		case left:
-            lp.ry()--;
-			m_currentDirection = up;
-			break;
-		case right:
-            lp.ry()++;
-			m_currentDirection = down;
-			break;
-	}
+    newHead.rx()++;
 
-	m_snakeCoords.push_front( lp );
+    m_snakeCoords.push_front( newHead );
 }
 
 /************************************************************************/
 
 void
-Snake::move_straight() noexcept
+Snake::move_up() noexcept
 {
-	auto lp = m_snakeCoords.front();
+    auto newHead = m_snakeCoords.front();
 
-	switch( m_currentDirection )
-	{
-		case up:
-            lp.ry()--;
-			break;
-		case down:
-            lp.ry()++;
-			break;
-		case left:
-            lp.rx()--;
-			break;
-		case right:
-            lp.rx()++;
-			break;
-	}
+    newHead.ry()--;
 
-	m_snakeCoords.push_front( lp );
+    m_snakeCoords.push_front( newHead );
 }
+
+/************************************************************************/
+
+void
+Snake::move_down() noexcept
+{
+    auto newHead = m_snakeCoords.front();
+
+    newHead.ry()++;
+
+    m_snakeCoords.push_front( newHead );
+}
+
 
 /************************************************************************/
 
@@ -142,10 +103,10 @@ Snake::shape() const
     for( auto && item : m_snakeCoords )
         snakeBody.addRect(
             QRect(
-                    item.x() * 25
-                ,   item.y() * 25
-                ,   25
-                ,   25
+                    item.x() * 18
+                ,   item.y() * 18
+                ,   18
+                ,   18
             )
         );
 
@@ -157,9 +118,9 @@ Snake::shape() const
 QRectF
 Snake::boundingRect() const
 {
-    int minX{ 20 };
+    int minX{ 30 };
     int maxX{ -1 };
-    int minY{ 20 };
+    int minY{ 30 };
     int maxY{ -1 };
 
     for( auto && pos : m_snakeCoords )
@@ -170,8 +131,8 @@ Snake::boundingRect() const
         maxY = pos.y() > maxY ? pos.y() : maxY;
     }
 
-    QPointF start = mapFromScene( QPointF( minX * 25, minY * 25 ) );
-    QPointF finish = mapFromScene( QPointF( maxX * 25, maxY * 25 ) );
+    QPointF start = mapFromScene( QPointF( minX * 18, minY * 18 ) );
+    QPointF finish = mapFromScene( QPointF( maxX * 18, maxY * 18 ) );
 
     return QRectF(
                 start.x()
