@@ -6,8 +6,8 @@
 
 /************************************************************************/
 
-Food::Food( QPoint position )
-    : m_position{ position }
+Food::Food( QPoint _position )
+    : m_position{ _position }
 {
     initPen();
     initBrush();

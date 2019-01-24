@@ -1,5 +1,5 @@
-#ifndef __TARGET_FOOD_HPP__
-#define __TARGET_FOOD_HPP__
+#ifndef QSNAKE_GAMEPLAY_FOOD_HPP_
+#define QSNAKE_GAMEPLAY_FOOD_HPP_
 
 /************************************************************************/
 
@@ -17,7 +17,7 @@ public:
 
 /************************************************************************/
 
-    Food( QPoint position );
+    explicit Food( QPoint _position );
 
 /************************************************************************/
 
@@ -39,9 +39,9 @@ private:
 
 /************************************************************************/
 
-}; // class Target
+}; // class Food
 
 /************************************************************************/
 
-#endif // __TARGET_FOOD_HPP__
+#endif // QSNAKE_GAMEPLAY_FOOD_HPP_
 

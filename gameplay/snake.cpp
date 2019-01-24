@@ -8,9 +8,9 @@
 
 Snake::Snake()
 {
-    m_snakeCoords.push_back( QPoint( 12, 11 ) );
-    m_snakeCoords.push_back( QPoint( 12, 12 ) );
-    m_snakeCoords.push_back( QPoint( 12, 13 ) );
+    m_snakeCoords.emplace_back( 12, 11 );
+    m_snakeCoords.emplace_back( 12, 11 );
+    m_snakeCoords.emplace_back( 12, 11 );
 }
 
 /************************************************************************/
@@ -18,11 +18,11 @@ Snake::Snake()
 void
 Snake::move_left() noexcept
 {
-    auto newHead = m_snakeCoords.front();
+    auto head = getHeadPosition();
 
-    newHead.rx()--;
+    head.rx()--;
 
-    m_snakeCoords.push_front( newHead );
+    m_snakeCoords.push_front( head );
 }
 
 /************************************************************************/
@@ -30,11 +30,11 @@ Snake::move_left() noexcept
 void
 Snake::move_right() noexcept
 {
-    auto newHead = m_snakeCoords.front();
+    auto head = getHeadPosition();
 
-    newHead.rx()++;
+    head.rx()++;
 
-    m_snakeCoords.push_front( newHead );
+    m_snakeCoords.push_front( head );
 }
 
 /************************************************************************/
@@ -42,11 +42,11 @@ Snake::move_right() noexcept
 void
 Snake::move_up() noexcept
 {
-    auto newHead = m_snakeCoords.front();
+    auto head = getHeadPosition();
 
-    newHead.ry()--;
+    head.ry()--;
 
-    m_snakeCoords.push_front( newHead );
+    m_snakeCoords.push_front( head );
 }
 
 /************************************************************************/
@@ -54,18 +54,18 @@ Snake::move_up() noexcept
 void
 Snake::move_down() noexcept
 {
-    auto newHead = m_snakeCoords.front();
+    auto head = getHeadPosition();
 
-    newHead.ry()++;
+    head.ry()++;
 
-    m_snakeCoords.push_front( newHead );
+    m_snakeCoords.push_front( head );
 }
 
 
 /************************************************************************/
 
 bool
-Snake::bodyHasCoords( QPoint _coords ) const
+Snake::bodyHasCoords( QPoint _coords ) const noexcept
 {
 	return std::find(
             ++m_snakeCoords.cbegin()
@@ -78,7 +78,7 @@ Snake::bodyHasCoords( QPoint _coords ) const
 /************************************************************************/
 
 QPoint
-Snake::getHeadPosition() const
+Snake::getHeadPosition() const noexcept
 {
 	return m_snakeCoords.front();
 }
@@ -96,12 +96,12 @@ Snake::removeTail() noexcept
 QPainterPath
 Snake::shape() const
 {
-    QPainterPath snakeBody;
-    snakeBody.setFillRule( Qt::WindingFill );
+    QPainterPath snake;
+    snake.setFillRule( Qt::WindingFill );
 
 
     for( auto && item : m_snakeCoords )
-        snakeBody.addRect(
+        snake.addRect(
             QRect(
                     item.x() * 18
                 ,   item.y() * 18
@@ -110,7 +110,7 @@ Snake::shape() const
             )
         );
 
-    return snakeBody;
+    return snake;
 }
 
 /************************************************************************/
@@ -135,11 +135,11 @@ Snake::boundingRect() const
     QPointF finish = mapFromScene( QPointF( maxX * 18, maxY * 18 ) );
 
     return QRectF(
-                start.x()
-            ,   start.y()
-            ,   finish.x() - start.x()
-            ,   finish.y() - start.y()
-        );
+            start.x()
+        ,   start.y()
+        ,   finish.x() - start.x()
+        ,   finish.y() - start.y()
+    );
 }
 
 /************************************************************************/

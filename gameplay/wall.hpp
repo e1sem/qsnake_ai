@@ -1,5 +1,5 @@
-#ifndef __WALL_HPP__
-#define __WALL_HPP__
+#ifndef QSNAKE_GAMEPLAY_WALL_HPP_
+#define QSNAKE_GAMEPLAY_WALL_HPP_
 
 /************************************************************************/
 
@@ -17,7 +17,7 @@ public:
 
 /************************************************************************/
 
-    Wall( int x, int y );
+    explicit Wall( QPoint _position );
 
 /************************************************************************/
 
@@ -35,4 +35,4 @@ private:
 
 /************************************************************************/
 
-#endif // __WALL_HPP__
+#endif // QSNAKE_GAMEPLAY_WALL_HPP_

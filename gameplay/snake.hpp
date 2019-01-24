@@ -1,5 +1,5 @@
-#ifndef __SNAKE_HPP__
-#define __SNAKE_HPP__
+#ifndef QSNAKE_GAMEPLAY_SNAKE_HPP_
+#define QSNAKE_GAMEPLAY_SNAKE_HPP_
 
 /************************************************************************/
 
@@ -33,9 +33,9 @@ public:
 
 /************************************************************************/
 
-    bool bodyHasCoords( QPoint _coords ) const;
+    bool bodyHasCoords( QPoint _coords ) const noexcept;
 
-    QPoint getHeadPosition() const;
+    QPoint getHeadPosition() const noexcept;
 
     void removeTail() noexcept;
 
@@ -65,4 +65,4 @@ private:
 
 /************************************************************************/
 
-#endif // __SNAKE_HPP__
+#endif // QSNAKE_GAMEPLAY_SNAKE_HPP_
