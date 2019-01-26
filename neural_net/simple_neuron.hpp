@@ -1,14 +1,14 @@
-#ifndef __SIMPLE_NEURON_HPP__
-#define __SIMPLE_NEURON_HPP__
+#ifndef QSNAKE_NEURALNET_NEURON_HPP_
+#define QSNAKE_NEURALNET_NEURON_HPP_
 
 /************************************************************************/
 
-#include "neural_net/base_neuron.hpp"
+#include "base_neuron.hpp"
 
 /************************************************************************/
 
 class Neuron
-	: public INeuron
+    :   public INeuron
 {
 
 /************************************************************************/
@@ -17,36 +17,43 @@ public:
 
 /************************************************************************/
 
-	Neuron( Layer const& _previous );
+    template< typename T >
+    Neuron( T const& previous );
 
 /************************************************************************/
 
 	double getResult() const noexcept override;
 
+    void setRandomWeights() noexcept;
+
+	int getLinksCount() const noexcept;
+
 /************************************************************************/
 
-	void setRandomWeights() noexcept;
+    std::vector< double > const& getWeights() const noexcept;
+
+	std::vector< double > & takeWeights() noexcept;
 
 /************************************************************************/
 
 private:
 
-/**********************************************************************/
+/************************************************************************/
 
-	static double activationFunction( double val ) noexcept;
+    static double activationFunction( double val ) noexcept;
 
-	inline double calculateResult() const noexcept;
+    inline double calculateResult() const noexcept;
 
-/**********************************************************************/
+/************************************************************************/
 
 	std::vector< const INeuron* > m_connections;
 
 	std::vector< double > m_weights;
 
-/**********************************************************************/
+/************************************************************************/
 
 }; // class Neuron
 
-/**********************************************************************/
+/************************************************************************/
 
-#endif // __SIMPLE_NEURON_HPP__
+#endif // QSNAKE_NEURALNET_NEURON_HPP_

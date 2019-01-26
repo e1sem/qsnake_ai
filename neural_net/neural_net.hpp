@@ -1,9 +1,15 @@
-#ifndef __NEURAL_NET_HPP__
-#define __NEURAL_NET_HPP__
+#ifndef QSNAKE_NEURALNET_NEURALNET_HPP_
+#define QSNAKE_NEURALNET_NEURALNET_HPP_
 
 /************************************************************************/
 
-#include "base_neuron.hpp"
+#include <string>
+#include <vector>
+
+/************************************************************************/
+
+class Receptor;
+class Neuron;
 
 /************************************************************************/
 
@@ -16,27 +22,33 @@ public:
 
 /************************************************************************/
 
-	using topology_t = std::vector< std::size_t >;
+    using topology_t = std::vector< unsigned int >;
 
 /************************************************************************/
-	
-	NeuralNet( topology_t const& _topology );
 
-	~NeuralNet();
+    NeuralNet( topology_t const& topology );
+
+    ~NeuralNet();
 
 /************************************************************************/
 
 	void randomizeWeights() noexcept;
 
-	void feedForward( std::vector< double > const& _input ) noexcept;
+	void feedForward( std::vector< double > const& input ) noexcept;
 
-	std::vector< double > getResults() const noexcept;
+    std::vector< double > getResults() const noexcept;
 
 /************************************************************************/
 
-	// void mutate() noexcept;
+    void mutate() noexcept;
 
-	// NeuralNet crossover( NeuralNet const& _other );
+    NeuralNet* crossover( NeuralNet const& other );
+
+/************************************************************************/
+
+    void saveToFile( std::string const& path ) const;
+
+    static NeuralNet* parseFromFile( std::string const& path );
 
 /************************************************************************/
 
@@ -44,12 +56,16 @@ private:
 
 /************************************************************************/
 
-	std::vector< INeuron::Layer > m_layers;
+    topology_t m_topology;
+
+	std::vector< Receptor* > m_receptors;
+
+    std::vector< std::vector< Neuron* > > m_layers;
 
 /************************************************************************/
 
-}; // class NeuralNet
+};
 
 /************************************************************************/
 
-#endif // __NEURAL_NET_HPP__
+#endif // QSNAKE_NEURALNET_NEURALNET_HPP_

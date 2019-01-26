@@ -5,11 +5,11 @@
 /************************************************************************/
 
 void
-Receptor::setResult( double value ) noexcept
+Receptor::setValue( double value ) noexcept
 {
-	assert( value <= 1.0 && value >= -1.0 );
+    assert( value <= 1.0 && value >= -1.0 );
 
-	m_outputValue = value;
+    m_outputValue = value;
 }
 
 /************************************************************************/

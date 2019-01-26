@@ -1,5 +1,5 @@
-#ifndef __RECEPTIVE_NEURON_HPP__
-#define __RECEPTIVE_NEURON_HPP__
+#ifndef QSNAKE_NEURALNET_RECEPTOR_HPP_
+#define QSNAKE_NEURALNET_RECEPTOR_HPP_
 
 /************************************************************************/
 
@@ -8,7 +8,7 @@
 /************************************************************************/
 
 class Receptor
-	: public INeuron
+    :   public INeuron
 {
 
 /************************************************************************/
@@ -17,13 +17,13 @@ public:
 
 /************************************************************************/
 
-	explicit Receptor() = default;
+	Receptor() = default;
 
 /************************************************************************/
 
-	void setResult( double value ) noexcept;
+    void setValue( double value ) noexcept;
 
-	double getResult() const noexcept override;
+    double getResult() const noexcept override;
 
 /************************************************************************/
 
@@ -39,4 +39,4 @@ private:
 
 /************************************************************************/
 
-#endif // __RECEPTIVE_NEURON_HPP__
+#endif // QSNAKE_NEURALNET_RECEPTOR_HPP_

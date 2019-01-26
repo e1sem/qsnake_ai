@@ -1,5 +1,5 @@
-#ifndef __BASE_NEURON_HPP__
-#define __BASE_NEURON_HPP__
+#ifndef QSNAKE_NEURALNET_INEURON_HPP_
+#define QSNAKE_NEURALNET_INEURON_HPP_
 
 /************************************************************************/
 
@@ -16,13 +16,13 @@ public:
 
 /************************************************************************/
 
-	using Layer = std::vector< INeuron* >;
+    using Layer = std::vector< INeuron* >;
 
 /************************************************************************/
 
-	virtual ~INeuron() = default;
-
 	virtual double getResult() const noexcept = 0;
+
+	virtual ~INeuron() = default;
 
 /************************************************************************/
 
@@ -30,4 +30,4 @@ public:
 
 /************************************************************************/
 
-#endif // __BASE_NEURON_HPP__
+#endif // QSNAKE_NEURALNET_INEURON_HPP_
