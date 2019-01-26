@@ -32,9 +32,9 @@ public:
 
 /************************************************************************/
 
-	void randomizeWeights() noexcept;
+    void randomizeWeights() noexcept;
 
-	void feedForward( std::vector< double > const& input ) noexcept;
+    void feedForward( std::vector< double > const& input ) noexcept;
 
     std::vector< double > getResults() const noexcept;
 
@@ -58,7 +58,7 @@ private:
 
     topology_t m_topology;
 
-	std::vector< Receptor* > m_receptors;
+    std::vector< Receptor* > m_receptors;
 
     std::vector< std::vector< Neuron* > > m_layers;
 

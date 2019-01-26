@@ -67,12 +67,12 @@ Snake::move_down() noexcept
 bool
 Snake::bodyHasCoords( QPoint _coords ) const noexcept
 {
-	return std::find(
+    return std::find(
             ++m_snakeCoords.cbegin()
-		,	m_snakeCoords.cend()
-		,	_coords
-	)
-		!= m_snakeCoords.cend();
+        ,    m_snakeCoords.cend()
+        ,    _coords
+    )
+        != m_snakeCoords.cend();
 }
 
 /************************************************************************/
@@ -80,7 +80,7 @@ Snake::bodyHasCoords( QPoint _coords ) const noexcept
 QPoint
 Snake::getHeadPosition() const noexcept
 {
-	return m_snakeCoords.front();
+    return m_snakeCoords.front();
 }
 
 /************************************************************************/

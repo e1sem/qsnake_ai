@@ -17,7 +17,7 @@ Receptor::setValue( double value ) noexcept
 double
 Receptor::getResult() const noexcept
 {
-	return m_outputValue;
+    return m_outputValue;
 }
 
 /************************************************************************/

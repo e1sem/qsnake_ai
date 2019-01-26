@@ -20,9 +20,9 @@ public:
 
 /************************************************************************/
 
-	virtual double getResult() const noexcept = 0;
+    virtual double getResult() const noexcept = 0;
 
-	virtual ~INeuron() = default;
+    virtual ~INeuron() = default;
 
 /************************************************************************/
 

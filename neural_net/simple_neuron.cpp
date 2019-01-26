@@ -9,12 +9,12 @@
 
 template< typename T >
 Neuron::Neuron( T const& previous )
-    :	m_weights( previous.size(), 0.0 )
+    :    m_weights( previous.size(), 0.0 )
 {
     assert( !previous.empty() );
 
     for( auto && neuron : previous )
-		m_connections.push_back( neuron );
+        m_connections.push_back( neuron );
 }
 
 /************************************************************************/
@@ -22,7 +22,7 @@ Neuron::Neuron( T const& previous )
 double
 Neuron::getResult() const noexcept
 {
-	return calculateResult();
+    return calculateResult();
 }
 
 /************************************************************************/
@@ -30,7 +30,7 @@ Neuron::getResult() const noexcept
 void
 Neuron::setRandomWeights() noexcept
 {
-	for( auto && weight : m_weights )
+    for( auto && weight : m_weights )
         weight = ( std::rand() % 201 - 100 ) / 100.0;
 }
 
@@ -39,7 +39,7 @@ Neuron::setRandomWeights() noexcept
 int
 Neuron::getLinksCount() const noexcept
 {
-	return m_connections.size();
+    return m_connections.size();
 }
 
 /************************************************************************/
@@ -55,7 +55,7 @@ Neuron::getWeights() const noexcept
 std::vector< double >&
 Neuron::takeWeights() noexcept
 {
-	return m_weights;
+    return m_weights;
 }
 
 /************************************************************************/
@@ -63,7 +63,7 @@ Neuron::takeWeights() noexcept
 double
 Neuron::activationFunction( double val ) noexcept
 {
-	return 1.0 / ( 1.0 + std::exp( -val ) );
+    return 1.0 / ( 1.0 + std::exp( -val ) );
 }
 
 /************************************************************************/
@@ -71,14 +71,14 @@ Neuron::activationFunction( double val ) noexcept
 double
 Neuron::calculateResult() const noexcept
 {
-	assert( m_connections.size() == m_weights.size() );
+    assert( m_connections.size() == m_weights.size() );
 
-	std::size_t countOfNeurons = m_weights.size();
-	double totalSum = 0.0;
+    std::size_t countOfNeurons = m_weights.size();
+    double totalSum = 0.0;
 
-	for (std::size_t i = 0; i < countOfNeurons; ++i)
-		totalSum += m_connections[i]->getResult()
-					* m_weights[i];
+    for (std::size_t i = 0; i < countOfNeurons; ++i)
+        totalSum += m_connections[i]->getResult()
+                    * m_weights[i];
 
     return activationFunction( totalSum );
 }

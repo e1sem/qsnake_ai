@@ -1,5 +1,5 @@
-#ifndef __MAIN_WINDOW_HPP__
-#define __MAIN_WINDOW_HPP__
+#ifndef QSNAKE_WIDGET_MAINWINDOW_HPP_
+#define QSNAKE_WIDGET_MAINWINDOW_HPP_
 
 /************************************************************************/
 
@@ -48,4 +48,4 @@ private:
 
 /************************************************************************/
 
-#endif // __MAIN_WINDOW_HPP__
+#endif // QSNAKE_WIDGET_MAINWINDOW_HPP_

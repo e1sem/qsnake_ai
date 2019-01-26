@@ -9,39 +9,39 @@
 /************************************************************************/
 
 NeuralNet::NeuralNet( topology_t const& topology )
-    :	m_topology{ topology }
+    :    m_topology{ topology }
 {
-	int countOfLayers = topology.size();
-	assert( countOfLayers >= 2 );
+    int countOfLayers = topology.size();
+    assert( countOfLayers >= 2 );
 
-	// Receptor layer
-	for ( unsigned int i = 0; i < topology[0]; ++i )
-		m_receptors.push_back( new Receptor() );
+    // Receptor layer
+    for ( unsigned int i = 0; i < topology[0]; ++i )
+        m_receptors.push_back( new Receptor() );
 
-	// Second layer
-	m_layers.push_back( std::vector< Neuron* >() );
-	for( unsigned int i = 0; i < topology[1]; ++i )
-		m_layers[0].push_back( new Neuron( m_receptors ) );
+    // Second layer
+    m_layers.push_back( std::vector< Neuron* >() );
+    for( unsigned int i = 0; i < topology[1]; ++i )
+        m_layers[0].push_back( new Neuron( m_receptors ) );
 
-	// Other layer
-	for ( int i = 1; i < countOfLayers - 1; ++i )
-	{
-		m_layers.push_back( std::vector< Neuron* >() );
-		for( unsigned int n = 0; n < topology[i+1]; ++n )
-			m_layers[i].push_back( new Neuron( m_layers[i-1] ) );
-	}
+    // Other layer
+    for ( int i = 1; i < countOfLayers - 1; ++i )
+    {
+        m_layers.push_back( std::vector< Neuron* >() );
+        for( unsigned int n = 0; n < topology[i+1]; ++n )
+            m_layers[i].push_back( new Neuron( m_layers[i-1] ) );
+    }
 }
 
 /************************************************************************/
 
 NeuralNet::~NeuralNet()
 {
-	for( auto && receptor : m_receptors )
-		delete receptor;
+    for( auto && receptor : m_receptors )
+        delete receptor;
 
-	for( auto && layer : m_layers )
-		for( auto && neuron : layer )
-			delete neuron;
+    for( auto && layer : m_layers )
+        for( auto && neuron : layer )
+            delete neuron;
 }
 
 /************************************************************************/
@@ -49,10 +49,10 @@ NeuralNet::~NeuralNet()
 void
 NeuralNet::randomizeWeights() noexcept
 {
-	for ( auto && layer : m_layers )
-		for ( auto && neuron : layer )
-			static_cast< Neuron* >( neuron )
-				->setRandomWeights();
+    for ( auto && layer : m_layers )
+        for ( auto && neuron : layer )
+            static_cast< Neuron* >( neuron )
+                ->setRandomWeights();
 }
 
 /************************************************************************/
@@ -60,11 +60,11 @@ NeuralNet::randomizeWeights() noexcept
 void
 NeuralNet::feedForward( std::vector< double > const& input ) noexcept
 {
-	int countOfInputs = input.size();
-	assert( countOfInputs == m_receptors.size() );
-	
-	for( int i = 0; i < countOfInputs; ++i )
-		static_cast< Receptor* >( m_receptors[i] )
+    int countOfInputs = input.size();
+    assert( countOfInputs == m_receptors.size() );
+    
+    for( int i = 0; i < countOfInputs; ++i )
+        static_cast< Receptor* >( m_receptors[i] )
             ->setValue( input[i] );
 }
 
@@ -73,12 +73,12 @@ NeuralNet::feedForward( std::vector< double > const& input ) noexcept
 std::vector< double >
 NeuralNet::getResults() const noexcept
 {
-	std::vector< double > result;
+    std::vector< double > result;
 
-	for( auto && reaction : m_layers.back() )
-		result.push_back( reaction->getResult() );
+    for( auto && reaction : m_layers.back() )
+        result.push_back( reaction->getResult() );
 
-	return result;
+    return result;
 }
 
 /************************************************************************/
@@ -91,23 +91,23 @@ NeuralNet::crossover( NeuralNet const& other )
 
     auto children = new NeuralNet( topology );
 
-	int layersCount = m_layers.size();
-	for( int l = 0; l < layersCount; ++l )
-	{
-		int neuronsCount = m_layers[l].size();
-		for( int n = 0; n < neuronsCount; ++n )
-		{
-			int linksCount = m_layers[l][n]->getLinksCount();
-			for( int w = 0; w < linksCount; ++w )
-			{
-				children->m_layers[l][n]->takeWeights()[w] =
-						std::rand() % 2
-					?	other.m_layers[l][n]->getWeights()[w]
-					:	m_layers[l][n]->getWeights()[w];
-			}
+    int layersCount = m_layers.size();
+    for( int l = 0; l < layersCount; ++l )
+    {
+        int neuronsCount = m_layers[l].size();
+        for( int n = 0; n < neuronsCount; ++n )
+        {
+            int linksCount = m_layers[l][n]->getLinksCount();
+            for( int w = 0; w < linksCount; ++w )
+            {
+                children->m_layers[l][n]->takeWeights()[w] =
+                        std::rand() % 2
+                    ?    other.m_layers[l][n]->getWeights()[w]
+                    :    m_layers[l][n]->getWeights()[w];
+            }
 
-		}
-	}
+        }
+    }
 
     return children;
 }
@@ -117,18 +117,18 @@ NeuralNet::crossover( NeuralNet const& other )
 void
 NeuralNet::mutate() noexcept
 {
-	int layersCount = m_layers.size();
-	int layerIndex = std::rand() % layersCount;
+    int layersCount = m_layers.size();
+    int layerIndex = std::rand() % layersCount;
 
-	int neuronsCount = m_layers[layerIndex].size();
-	int neuronIndex = std::rand() % neuronsCount;
+    int neuronsCount = m_layers[layerIndex].size();
+    int neuronIndex = std::rand() % neuronsCount;
 
     int linksCount = m_layers[layerIndex][neuronIndex]->getLinksCount();
     int linkIndex = std::rand() % linksCount;
 
     auto& weight = m_layers[layerIndex][neuronIndex]->takeWeights()[linkIndex];
 
-	weight = ( std::rand() % 201 - 100 ) / 100.0;
+    weight = ( std::rand() % 201 - 100 ) / 100.0;
 }
 
 /************************************************************************/
@@ -139,8 +139,8 @@ NeuralNet::saveToFile( std::string const& path ) const
     constexpr char hSeparator = ';';
     constexpr char vSeparator = '\n';
 
-	std::ofstream fileOut;
-	fileOut.open( path, std::ios_base::out );
+    std::ofstream fileOut;
+    fileOut.open( path, std::ios_base::out );
 
     assert( fileOut.is_open() );
 
@@ -151,17 +151,17 @@ NeuralNet::saveToFile( std::string const& path ) const
 
     fileOut << vSeparator;
 
-	for( auto && layer : m_layers )
-		for( auto && neuron : layer )
-		{
-			auto & weigts = neuron->getWeights();
-			for( auto && weight : weigts )
+    for( auto && layer : m_layers )
+        for( auto && neuron : layer )
+        {
+            auto & weigts = neuron->getWeights();
+            for( auto && weight : weigts )
                 fileOut << weight << hSeparator;
 
             fileOut << vSeparator;
-		}
+        }
 
-	fileOut.close();
+    fileOut.close();
 }
 
 /************************************************************************/
@@ -171,30 +171,30 @@ NeuralNet::parseFromFile( std::string const& path )
 {
     constexpr char hSeparator = ';';
 
-	std::ifstream fileIn;
-	fileIn.open( path, std::ios_base::in );
-	
+    std::ifstream fileIn;
+    fileIn.open( path, std::ios_base::in );
+    
     assert( fileIn.is_open() );
 
-	int topologySize;
-	fileIn >> topologySize;
+    int topologySize;
+    fileIn >> topologySize;
 
-	topology_t topology( topologySize );
-	for( int i = 0; i < topologySize; ++i )
-		fileIn >> topology[i];
+    topology_t topology( topologySize );
+    for( int i = 0; i < topologySize; ++i )
+        fileIn >> topology[i];
 
-	auto result = new NeuralNet( topology );
+    auto result = new NeuralNet( topology );
 
-	for( auto && layer : result->m_layers )
-		for( auto && neuron : layer )
-		{
-			auto & weigts = neuron->takeWeights();
-			for (auto && weight : weigts)
-				fileIn >> weight;
-		}
+    for( auto && layer : result->m_layers )
+        for( auto && neuron : layer )
+        {
+            auto & weigts = neuron->takeWeights();
+            for (auto && weight : weigts)
+                fileIn >> weight;
+        }
 
-	fileIn.close();
-	return result;
+    fileIn.close();
+    return result;
 }
 
 /************************************************************************/

@@ -22,17 +22,17 @@ public:
 
 /************************************************************************/
 
-	double getResult() const noexcept override;
+    double getResult() const noexcept override;
 
     void setRandomWeights() noexcept;
 
-	int getLinksCount() const noexcept;
+    int getLinksCount() const noexcept;
 
 /************************************************************************/
 
     std::vector< double > const& getWeights() const noexcept;
 
-	std::vector< double > & takeWeights() noexcept;
+    std::vector< double > & takeWeights() noexcept;
 
 /************************************************************************/
 
@@ -46,9 +46,9 @@ private:
 
 /************************************************************************/
 
-	std::vector< const INeuron* > m_connections;
+    std::vector< const INeuron* > m_connections;
 
-	std::vector< double > m_weights;
+    std::vector< double > m_weights;
 
 /************************************************************************/
 
