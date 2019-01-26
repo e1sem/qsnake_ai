@@ -1,9 +1,14 @@
-#ifndef __PLAYER_HPP__
-#define __PLAYER_HPP__
+#ifndef QSNAKE_WORLD_PLAYER_HPP_
+#define QSNAKE_WORLD_PLAYER_HPP_
 
 /************************************************************************/
 
-#include <QObject>
+#include "neural_net/neural_net.hpp"
+
+#include <QPoint>
+
+#include <memory>
+#include <vector>
 
 /************************************************************************/
 
@@ -15,12 +20,7 @@ class Food;
 /************************************************************************/
 
 class Player
-    : public QObject
 {
-
-/************************************************************************/
-
-    Q_OBJECT
 
 /************************************************************************/
 
@@ -30,20 +30,24 @@ public:
 
     Player(
             QGraphicsScene* _scene
-        ,   QObject* _parent = nullptr
+        ,   NeuralNet* _brain
     );
+
+    ~Player();
+
+/************************************************************************/
+
+    void loseGame();
+
+    void nextStep();
 
 /************************************************************************/
 
     int getGameScore() const noexcept;
 
-/************************************************************************/
+    int getStepsCount() const noexcept;
 
-signals:
-
-/************************************************************************/
-
-    void gameOver();
+    bool isGameOver() const noexcept;
 
 /************************************************************************/
 
@@ -57,23 +61,39 @@ private:
 
     void handleCollisions() noexcept;
 
-/************************************************************************/
-
-    void handleWallCollision() noexcept;
-
-    void handleSnakeCollision() noexcept;
-
     void handleFoodCollision() noexcept;
 
+    void continueGame() noexcept;
+
 /************************************************************************/
+
+    std::vector<double> collectInputs() const noexcept;
+
+    void analyzeOutputs( std::vector<double> _data ) noexcept;
+
+    static bool inBounds( QPoint _point ) noexcept;
+
+    QPoint getNewFoodCoord() const noexcept;
+
+/************************************************************************/
+
+    std::unique_ptr< NeuralNet > m_pBrain;
 
     QGraphicsScene* m_gameField;
 
+/************************************************************************/
+
     int m_gameScore;
 
-    Snake* m_snake;
+    int m_gameSteps;
+
+    bool m_gameOver;
+
+/************************************************************************/
 
     Food* m_food;
+
+    Snake* m_snake;
 
 /************************************************************************/
 
@@ -81,4 +101,4 @@ private:
 
 /************************************************************************/
 
-#endif // __PLAYER_HPP__
+#endif // QSNAKE_WORLD_PLAYER_HPP_
